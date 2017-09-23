@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/tablet_grid_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/cooking_icon"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/cooking_icon" />
+
+            <TextView
+                android:id="@+id/recipe_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Neutella Pie"
+                android:layout_marginTop="10dp"
+                android:layout_centerVertical="true"
+                android:textAlignment="center"
+                android:layout_below="@+id/cooking_icon"
+                android:textSize="25sp"
+                android:lines="1"
+                android:ellipsize="end"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
