@@ -15,6 +15,7 @@
         android:background="?android:attr/selectableItemBackground">
 
         <ImageView
+            android:id="@+id/cooking_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cooking_icon" />

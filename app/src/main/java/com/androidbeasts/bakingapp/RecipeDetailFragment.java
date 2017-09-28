@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.androidbeasts.bakingapp.adapter.RecipeStepAdapter;
 import com.androidbeasts.bakingapp.model.Ingredients;
 import com.androidbeasts.bakingapp.model.Steps;
+import com.androidbeasts.bakingapp.widget.UpdateBakingService;
 
 import java.util.ArrayList;
 
@@ -194,12 +195,19 @@ public class RecipeDetailFragment extends Fragment implements RecipeStepAdapter.
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-
+        ArrayList<String> recipeIngredientsForWidgets= new ArrayList<>();
         for (Ingredients ingredients : ingredientsArrayList) {
             stringBuilder.append(" \u2605 " + ingredients.getQuantity() + ingredients.getMeasure() + " of " + ingredients.getIngredient() + "\n");
+            recipeIngredientsForWidgets.add(ingredients.getIngredient()+"\n"+
+                    "Quantity: "+ingredients.getQuantity().toString()+"\n"+
+                    "Measure: "+ingredients.getMeasure()+"\n");
         }
 
         mIngredientsTv.setText(stringBuilder.toString());
+
+        //update widget
+        UpdateBakingService.startBakingService(getContext(),recipeIngredientsForWidgets);
+
 
     }
 }

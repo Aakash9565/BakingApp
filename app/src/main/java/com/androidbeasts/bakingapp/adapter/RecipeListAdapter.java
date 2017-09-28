@@ -1,16 +1,21 @@
 package com.androidbeasts.bakingapp.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidbeasts.bakingapp.R;
 import com.androidbeasts.bakingapp.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +71,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.recipe_name)
         TextView recipeNameTv;
+        @BindView(R.id.cooking_icon)
+        ImageView recipeIconIv;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -82,6 +89,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         void bind(int listIndex) {
             Recipe recipe = recipeArrayList.get(listIndex);
             recipeNameTv.setText(recipe.getRecipe_name());
+
+            //Glide.with(itemView).load(recipeArrayList.get(listIndex).getStepsArrayList().get().getVideoURL()).into(recipeIconIv);
+//            Drawable verticalImage = null;
+//
+//                verticalImage = new BitmapDrawable(context.getResources(), retriveVideoFrameFromVideo(recipeArrayList.get(listIndex).getStepsArrayList().get(0).getVideoURL()));
+
+//            recipeIconIv.setImageDrawable(verticalImage);
         }
 
         /**
@@ -96,4 +110,27 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
         }
     }
 
+
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath) throws Throwable {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        try {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+            if (Build.VERSION.SDK_INT >= 14)
+                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+            else
+                mediaMetadataRetriever.setDataSource(videoPath);
+            //   mediaMetadataRetriever.setDataSource(videoPath);
+            bitmap = mediaMetadataRetriever.getFrameAtTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Throwable("Exception in retriveVideoFrameFromVideo(String videoPath)" + e.getMessage());
+
+        } finally {
+            if (mediaMetadataRetriever != null) {
+                mediaMetadataRetriever.release();
+            }
+        }
+        return bitmap;
+    }
 }
